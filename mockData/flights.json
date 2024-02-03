@@ -1,0 +1,184 @@
+{
+  "flights": [
+    {
+      "id": 1,
+      "departureAirport": "Istanbul Airport (IST) - İstanbul",
+      "arrivalAirport": "John F. Kennedy Airport (JFK) - New York",
+      "departureTime": "Thu Feb 15 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "arrivalTime": "Thu Feb 15 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "price": 500,
+      "duration": "10h 30m"
+    },
+    {
+      "id": 2,
+      "departureAirport": "Los Angeles International Airport (LAX) - Los Angeles",
+      "arrivalAirport": "London Heathrow Airport (LHR) - London",
+      "departureTime": "Fri Feb 16 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "arrivalTime": "Fri Feb 16 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "price": 450,
+      "duration": "11h 0m"
+    },
+    {
+      "id": 3,
+      "departureAirport": "Istanbul Airport (IST) - İstanbul",
+      "arrivalAirport": "John F. Kennedy Airport (JFK) - New York",
+      "departureTime": "Sun Feb 18 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "arrivalTime": "Sun Feb 18 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "price": 100,
+      "duration": "10h 30m"
+    },
+    {
+      "id": 4,
+      "departureAirport": "John F. Kennedy Airport (JFK) - New York",
+      "arrivalAirport": "Istanbul Airport (IST) - İstanbul",
+      "departureTime": "Tue Feb 20 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "arrivalTime": "Tue Feb 20 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "price": 550,
+      "duration": "9h 45m"
+    },
+    {
+      "id": 5,
+      "departureAirport": "London Heathrow Airport (LHR) - London",
+      "arrivalAirport": "Los Angeles International Airport (LAX) - Los Angeles",
+      "departureTime": "Wed Feb 21 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "arrivalTime": "Wed Feb 21 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "price": 480,
+      "duration": "11h 15m"
+    },
+    {
+      "id": 6,
+      "departureAirport": "John F. Kennedy Airport (JFK) - New York",
+      "arrivalAirport": "Istanbul Airport (IST) - İstanbul",
+      "departureTime": "Fri Feb 23 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "arrivalTime": "Fri Feb 23 2024 00:00:00 GMT+0300 (GMT+03:00)",
+      "price": 110,
+      "duration": "9h 45m"
+    },
+    {
+      "id": 7,
+      "departureAirport": "Charles de Gaulle Airport (CDG) - Paris",
+      "arrivalAirport": "Frankfurt Airport (FRA) - Frankfurt",
+      "departureTime": "Sat Feb 24 2024 10:00:00 GMT+0100 (CET)",
+      "arrivalTime": "Sat Feb 24 2024 12:00:00 GMT+0100 (CET)",
+      "price": 120,
+      "duration": "1h 0m"
+    },
+    {
+      "id": 8,
+      "departureAirport": "Dubai International Airport (DXB) - Dubai",
+      "arrivalAirport": "Singapore Changi Airport (SIN) - Singapore",
+      "departureTime": "Mon Feb 26 2024 05:00:00 GMT+0400 (Gulf Standard Time)",
+      "arrivalTime": "Mon Feb 26 2024 17:00:00 GMT+0800 (Singapore Standard Time)",
+      "price": 700,
+      "duration": "7h 0m"
+    },
+    {
+      "id": 9,
+      "departureAirport": "Narita International Airport (NRT) - Tokyo",
+      "arrivalAirport": "Toronto Pearson International Airport (YYZ) - Toronto",
+      "departureTime": "Tue Feb 27 2024 11:00:00 GMT+0900 (Japan Standard Time)",
+      "arrivalTime": "Tue Feb 27 2024 10:00:00 GMT-0500 (Eastern Standard Time)",
+      "price": 950,
+      "duration": "13h 0m"
+    },
+    {
+      "id": 10,
+      "departureAirport": "Toronto Pearson International Airport (YYZ) - Toronto",
+      "arrivalAirport": "Narita International Airport (NRT) - Tokyo",
+      "departureTime": "Thu Mar 01 2024 14:00:00 GMT-0500 (Eastern Standard Time)",
+      "arrivalTime": "Fri Mar 02 2024 18:00:00 GMT+0900 (Japan Standard Time)",
+      "price": 1000,
+      "duration": "14h 0m"
+    },
+    {
+      "id": 11,
+      "departureAirport": "Singapore Changi Airport (SIN) - Singapore",
+      "arrivalAirport": "Dubai International Airport (DXB) - Dubai",
+      "departureTime": "Sat Mar 03 2024 20:00:00 GMT+0800 (Singapore Standard Time)",
+      "arrivalTime": "Sat Mar 03 2024 23:00:00 GMT+0400 (Gulf Standard Time)",
+      "price": 720,
+      "duration": "7h 0m"
+    },
+    {
+      "id": 12,
+      "departureAirport": "Frankfurt Airport (FRA) - Frankfurt",
+      "arrivalAirport": "Charles de Gaulle Airport (CDG) - Paris",
+      "departureTime": "Sun Mar 04 2024 09:00:00 GMT+0100 (Central European Time)",
+      "arrivalTime": "Sun Mar 04 2024 10:00:00 GMT+0100 (Central European Time)",
+      "price": 130,
+      "duration": "1h 0m"
+    },
+    {
+      "id": 13,
+      "departureAirport": "Dubai International Airport (DXB) - Dubai",
+      "arrivalAirport": "John F. Kennedy Airport (JFK) - New York",
+      "departureTime": "Mon Mar 05 2024 07:00:00 GMT+0400 (Gulf Standard Time)",
+      "arrivalTime": "Mon Mar 05 2024 13:00:00 GMT-0500 (Eastern Standard Time)",
+      "price": 1100,
+      "duration": "12h 0m"
+    },
+    {
+      "id": 14,
+      "departureAirport": "London Heathrow Airport (LHR) - London",
+      "arrivalAirport": "Dubai International Airport (DXB) - Dubai",
+      "departureTime": "Wed Mar 07 2024 22:00:00 GMT+0000 (Greenwich Mean Time)",
+      "arrivalTime": "Thu Mar 08 2024 08:00:00 GMT+0400 (Gulf Standard Time)",
+      "price": 600,
+      "duration": "10h 0m"
+    },
+    {
+      "id": 15,
+      "departureAirport": "Singapore Changi Airport (SIN) - Singapore",
+      "arrivalAirport": "Narita International Airport (NRT) - Tokyo",
+      "departureTime": "Fri Mar 09 2024 23:00:00 GMT+0800 (Singapore Standard Time)",
+      "arrivalTime": "Sat Mar 10 2024 05:30:00 GMT+0900 (Japan Standard Time)",
+      "price": 650,
+      "duration": "6h 30m"
+    },
+    {
+      "id": 16,
+      "departureAirport": "Frankfurt Airport (FRA) - Frankfurt",
+      "arrivalAirport": "Singapore Changi Airport (SIN) - Singapore",
+      "departureTime": "Sun Mar 11 2024 13:00:00 GMT+0100 (Central European Time)",
+      "arrivalTime": "Mon Mar 12 2024 07:00:00 GMT+0800 (Singapore Standard Time)",
+      "price": 800,
+      "duration": "12h 0m"
+    },
+    {
+      "id": 17,
+      "departureAirport": "Charles de Gaulle Airport (CDG) - Paris",
+      "arrivalAirport": "Frankfurt Airport (FRA) - Frankfurt",
+      "departureTime": "2024-02-24T08:00:00",
+      "arrivalTime": "2024-02-24T09:45:00",
+      "duration": "1h 45m",
+      "price": 120
+    },
+    {
+      "id": 18,
+      "departureAirport": "Charles de Gaulle Airport (CDG) - Paris",
+      "arrivalAirport": "Frankfurt Airport (FRA) - Frankfurt",
+      "departureTime": "2024-02-24T12:00:00",
+      "arrivalTime": "2024-02-24T13:50:00",
+      "duration": "1h 50m",
+      "price": 150
+    },
+    {
+      "id": 19,
+      "departureAirport": "Charles de Gaulle Airport (CDG) - Paris",
+      "arrivalAirport": "Frankfurt Airport (FRA) - Frankfurt",
+      "departureTime": "2024-02-24T17:00:00",
+      "arrivalTime": "2024-02-24T18:40:00",
+      "duration": "1h 40m",
+      "price": 135
+    },
+    {
+      "id": 20,
+      "departureAirport": "Charles de Gaulle Airport (CDG) - Paris",
+      "arrivalAirport": "Frankfurt Airport (FRA) - Frankfurt",
+      "departureTime": "2024-02-24T20:00:00",
+      "arrivalTime": "2024-02-24T21:45:00",
+      "duration": "1h 45m",
+      "price": 110
+    }
+  ]
+}

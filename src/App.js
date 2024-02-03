@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import SearchForm from './components/SearchForm';
+import FlightList from './components/FlightList';
+import "./App.css";
 
 function App() {
+  const [searchParams, setSearchParams] = useState(null);
+  const [searchMade, setSearchMade] = useState(false); // Arama yapıldığını takip et
+
+  const handleSearch = (values) => {
+    setSearchParams(values);
+    setSearchMade(true); // Arama yapıldığında bu durumu true olarak güncelle
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Uçuş Arama Uygulaması</h1>
+      <SearchForm onSearch={handleSearch} />
+      {searchMade && <FlightList searchParams={searchParams} />}
     </div>
   );
 }
