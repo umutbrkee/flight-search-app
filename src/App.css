@@ -1,139 +1,85 @@
 .App {
   text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-/* Genel Stiller */
 body, html {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background-color: #f0f0f0; /* Arka plan rengi */
-  color: #333; /* Temel yazı rengi */
+  background-image: url('https://img.freepik.com/free-vector/flight-booking-concept-illustration_114360-2413.jpg?w=1060&t=st=1707046400~exp=1707047000~hmac=db6b801b39d57c5d92724ee811070218d6730a6602841e23e8b759e26d56c921');
+  background-size: cover;
+  color: #333;
 }
 
-.App {
-  text-align: center;
+.searchFormContainer {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 900px;
+}
+
+input, .searchButton {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin: 10px 0;
+  width: calc(100% - 30px);
+}
+
+.searchButton {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .flightListContainer {
-  display: flex;
-  flex-direction: column; /* İçerikleri dikey olarak hizalar */
-  align-items: center; /* İçerikleri yatay eksende ortalar */
-  margin-top: 20px;
+  margin: 20px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sortSelect {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
 }
 
 .flightHeader {
-  color: #005288; /* Başlık rengi */
-  margin: 20px 0;
-}
-
-/* Form Stilleri */
-.form {
-  display: flex;
-  flex-direction: column; /* Form elemanlarını dikey olarak hizalar */
-  align-items: center; /* Form elemanlarını yatay eksende ortalar */
-  margin: 20px auto;
-  width: 90%;
-  max-width: 500px;
-}
-
-.error {
-  color: #d9534f; /* Hata mesajı rengi */
-  font-size: 0.8rem;
-  margin: 5px 0;
-}
-
-/* Seçim Kutusu ve Tarih Seçici Stilleri */
-select, .DatePicker {
-  padding: 10px;
-  width: 100%;
   margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #ffffff; /* Seçim kutusu arka plan rengi */
+  color: #333;
 }
 
-/* Uçuş Listesi Stilleri */
-ul {
+.flightList {
   list-style: none;
   padding: 0;
-  width: 100%;
-  max-width: 600px; /* Uçuş listesi genişliği */
 }
 
 .flightItem {
-  background-color: #ffffff; /* Uçuş öğesi arka plan rengi */
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Kutu gölgesi */
+  margin-bottom: 10px;
 }
 
 .flightDetails {
+  font-size: 14px;
+  color: #555;
   margin: 5px 0;
-  color: #555; /* Uçuş detay yazı rengi */
 }
 
-/* Buton Stilleri */
-button {
-  background-color: #4CAF50; /* Yeşil */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #45a049; /* Buton hover rengi */
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Responsive Tasarım */
-@media (max-width: 768px) {
-  .form, ul {
-    width: 95%;
-  }
+.flightPrice {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
 }

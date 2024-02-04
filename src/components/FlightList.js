@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import "../App.css";
 
 
 const FlightList = ({ searchParams }) => {
@@ -22,6 +23,7 @@ const FlightList = ({ searchParams }) => {
 
           if (flight.arrivalAirport === searchParams.arrivalAirport && flight.departureAirport === searchParams.departureAirport) {
             if (searchDepartureDate === flightDepartureDate) {
+              flight.durationInMinutes = parseDurationToMinutes(flight.duration);
               departureFlights.push(flight);
             }
           }
@@ -61,11 +63,25 @@ const FlightList = ({ searchParams }) => {
         flights.sort((a, b) => new Date(a.arrivalTime) - new Date(b.arrivalTime));
         break;
       case 'duration':
-        flights.sort((a, b) => a.duration - b.duration);
+        flights.sort((a, b) => a.durationInMinutes - b.durationInMinutes); // Sort by duration in minutes
         break;
       default:
-        break; // No sorting or default sorting
+        break;
     }
+  };
+  const parseDurationToMinutes = (duration) => {
+    const parts = duration.split(' '); // Split duration by space
+    let minutes = 0;
+
+    for (const part of parts) {
+      if (part.includes('h')) {
+        minutes += parseInt(part, 10) * 60; // Convert hours to minutes
+      } else if (part.includes('m')) {
+        minutes += parseInt(part, 10); // Add minutes
+      }
+    }
+
+    return minutes;
   };
 
   const handleSortChange = (e) => {
@@ -74,7 +90,7 @@ const FlightList = ({ searchParams }) => {
 
   // Loading Indicator
   if (isLoading) {
-    return <div className="loading">Yükleniyor...</div>; // You can replace this with a spinner or any custom loading animation
+    return <div className="loading">Yükleniyor...</div>; // can replace this with a spinner or any custom loading animation
   }
 
   if (departure.length === 0 && searchParams.oneWay) {
@@ -83,85 +99,44 @@ const FlightList = ({ searchParams }) => {
     return <div>Uygun uçuş bulunamadı.</div>;
   }
 
-  const FlightListStyles = `
-  .flightListContainer {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  .flightHeader {
-    color: #333;
-    margin-bottom: 20px;
-  }
-  .flightItem {
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    list-style-type: none;
-  }
-  .loading {
-    text-align: center;
-    padding: 50px 0;
-  }
-  .flightDetails {
-    margin: 5px 0;
-  }
-  .sortButton {
-    cursor: pointer;
-    padding: 5px 10px;
-    margin-right: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-  }
-  .sortButton:hover {
-    background-color: #0056b3;
-  }
-`;
-  return (
-    <div className="flightListContainer">
-      <select value={sortCriteria} onChange={handleSortChange}>
-        <option value="price">Price</option>
-        <option value="departureTime">Departure Time</option>
-        <option value="arrivalTime">Arrival Time</option>
-        <option value="duration">Duration</option>
-      </select>
-      <style>{`
-        // CSS stilleri buraya
-        ${FlightListStyles}
-      `}</style>
-      <h2 className="flightHeader">Gidiş Uçuşları</h2>
-      <ul>
-        {departure.map((flight) => (
-          <li key={flight.id} className="flightItem">
-            <div className="flightDetails">{flight.departureAirport} - {flight.arrivalAirport}</div>
-            <div className="flightDetails">Kalkış: {new Date(flight.departureTime).toLocaleString()}</div>
-            <div className='flightDetails'>Varış: {new Date(flight.arrivalTime).toLocaleString()}</div>
-                <div className='flightDetails'>Uçuş Süresi: {flight.duration}</div>
-            <div className="flightDetails">Fiyat: ${flight.price}</div>
-          </li>
-        ))}
-      </ul>
-      {!searchParams.oneWay && (
-        <div>
-          <h2 className="flightHeader">Dönüş Uçuşları</h2>
-          <ul>
-            {departureReturn.map((flight) => (
-              <li key={flight.id} className="flightItem">
-                <div className="flightDetails">{flight.departureAirport} - {flight.arrivalAirport}</div>
-                <div className="flightDetails">Kalkış: {new Date(flight.departureTime).toLocaleString()}</div>
-                <div className='flightDetails'>Varış: {new Date(flight.arrivalTime).toLocaleString()}</div>
-                <div className='flightDetails'>Uçuş Süresi: {flight.duration}</div>
-                <div className="flightDetails">Fiyat: ${flight.price}</div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
-
+  
+return (
+  <div className="flightListContainer">
+    <select value={sortCriteria} onChange={handleSortChange} className="sortSelect">
+      <option value="price">Price</option>
+      <option value="departureTime">Departure Time</option>
+      <option value="arrivalTime">Arrival Time</option>
+      <option value="duration">Duration</option>
+    </select>
+    <h2 className="flightHeader">Gidiş Uçuşları</h2>
+    <ul className="flightList">
+      {departure.map((flight) => (
+        <li key={flight.id} className="flightItem">
+          <div className="flightDetails">{flight.departureAirport} - {flight.arrivalAirport}</div>
+          <div className="flightDetails">Kalkış: {new Date(flight.departureTime).toLocaleString()}</div>
+          <div className="flightDetails">Varış: {new Date(flight.arrivalTime).toLocaleString()}</div>
+          <div className="flightDetails">Uçuş Süresi: {flight.duration}</div>
+          <div className="flightPrice">Fiyat: ${flight.price}</div>
+        </li>
+      ))}
+    </ul>
+    {!searchParams.oneWay && (
+      <div>
+        <h2 className="flightHeader">Dönüş Uçuşları</h2>
+        <ul className="flightList">
+          {departureReturn.map((flight) => (
+            <li key={flight.id} className="flightItem">
+              <div className="flightDetails">{flight.departureAirport} - {flight.arrivalAirport}</div>
+              <div className="flightDetails">Kalkış: {new Date(flight.departureTime).toLocaleString()}</div>
+              <div className="flightDetails">Varış: {new Date(flight.arrivalTime).toLocaleString()}</div>
+              <div className="flightDetails">Uçuş Süresi: {flight.duration}</div>
+              <div className="flightPrice">Fiyat: ${flight.price}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+);
+          }
 export default FlightList;
