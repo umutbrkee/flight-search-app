@@ -1,6 +1,3 @@
-Uçuş Arama Uygulaması
-Bu projede, kullanıcıların kalkış ve varış havaalanları ile tarih bilgilerini girerek uygun uçuş seçeneklerini arayabileceği bir uçuş arama uygulaması geliştirilmiştir. ReactJS kullanılarak geliştirilen bu uygulama, modern web geliştirme teknikleri ve kütüphaneleri kullanarak etkileşimli kullanıcı deneyimleri sunar.
-
 Özellikler
 Kullanıcılar için dinamik uçuş arama formu
 Tek yönlü veya gidiş-dönüş uçuş seçenekleri
