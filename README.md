@@ -4,34 +4,28 @@ Tek yönlü veya gidiş-dönüş uçuş seçenekleri
 Uçuş sonuçlarının fiyat, kalkış ve varış zamanına göre sıralanması
 Responsive tasarım
 Kurulum
+
 Projeyi lokal ortamınızda çalıştırmak için aşağıdaki adımları takip edin:
 
 Projeyi klonlayın:
-
-bash
-Copy code
+Copy code:
 git clone https://github.com/your-repository/flight-search-app.git
+
 Proje dizinine gidin:
-
-bash
-Copy code
+Copy code:
 cd flight-search-app
+
 Gerekli npm paketlerini yükleyin:
-
-bash
-Copy code
+Copy code:
 npm install
-JSON Server'ı başlatın (Veritabanı olarak kullanılacak):
 
-bash
-Copy code
+JSON Server'ı yeni bir terminal sekmesinde başlatın (Veritabanı olarak kullanılacak):
+Copy code:
 npx json-server --watch db.json --port 3001
 db.json, projenin kök dizinindeki JSON dosyasıdır ve uygulama tarafından kullanılan verileri içerir.
 
 Uygulamayı geliştirme modunda başlatın:
-
-bash
-Copy code
+Copy code:
 npm start
 Uygulama otomatik olarak varsayılan tarayıcınızda http://localhost:3000 adresinde açılacaktır.
 
