@@ -28,7 +28,6 @@ input, .searchButton {
   border-radius: 4px;
   padding: 10px 15px;
   margin: 10px 0;
-  width: calc(100% - 30px);
 }
 
 .searchButton {

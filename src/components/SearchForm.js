@@ -6,6 +6,8 @@ import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import axios from 'axios';
 import "../App.css";
+import { TbArrowsLeftRight } from "react-icons/tb";
+
 
 
 const SearchSchema = Yup.object().shape({
@@ -92,6 +94,16 @@ const SearchForm = ({ onSearch }) => {
     textTransform: 'uppercase',
     marginTop: '20px',
   };
+  const dateClass = {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    height:'80px',
+    justifyContent:'space-between',
+    alignItems: 'center',
+
+  }
+  
 
 
   return (
@@ -103,7 +115,8 @@ const SearchForm = ({ onSearch }) => {
         background: '#fff', 
         padding: '20px', 
         borderRadius: '8px', 
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' 
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', 
+        textAlign: 'left',
       }}>
       <Formik
         initialValues={{
@@ -159,35 +172,40 @@ const SearchForm = ({ onSearch }) => {
               />
               <ErrorMessage name="arrivalAirport" component="div" style={{ color: 'red', fontSize: '0.75rem', marginTop: '0.25rem' }} />
             </div>
-  
-            <div>
-              <label htmlFor="departureDate" style={{ marginBottom: '5px', fontWeight: '600' }}>Kalkış Tarihi</label>
+  <div style={dateClass}>
+            <div style={{width:'45%'}}>
+              <label htmlFor="departureDate" style={{ marginBottom: '5px', fontWeight: '600' }}>Kalkış Tarihi </label>
               <DatePicker
                 selected={values.departureDate}
-                dateFormat="yyyy-MM-dd'T'HH:mm:ss"
+                dateFormat="yyyy-MM-dd"
                 onChange={(date) => setFieldValue('departureDate', date)}
                 style={datePickerStyle}
               />
               <ErrorMessage name="departureDate" component="div" style={errorStyle} />
             </div>
-  
-            <div>
-              <label htmlFor="returnDate" style={{ marginBottom: '5px', fontWeight: '600' }}>Dönüş Tarihi</label>
+            {!values.oneWay && (
+            <span style={{width:'10%', marginTop:'20px'}}>
+        <TbArrowsLeftRight />
+      </span>)}
+            {!values.oneWay && (
+            <div style={{width:'45%'}}>
+              <label htmlFor="returnDate" style={{ marginBottom: '5px', fontWeight: '600' }}>Dönüş Tarihi </label>
               <DatePicker
                 selected={values.returnDate}
-                dateFormat="yyyy-MM-dd'T'HH:mm:ss"
+                dateFormat="yyyy-MM-dd"
                 onChange={(date) => setFieldValue('returnDate', date)}
                 disabled={values.oneWay}
                 style={datePickerStyle}
               />
               <ErrorMessage name="returnDate" component="div" style={errorStyle} />
             </div>
-  
+            )}
+              </div>
+
             <div style={checkboxContainerStyle}>
               <Field type="checkbox" name="oneWay" style={checkboxStyle} />
-              <label htmlFor="oneWay">Tek yönlü uçuş</label>
+              <label htmlFor="oneWay" style={{ fontWeight: '600' }}>Tek yönlü uçuş </label>
             </div>
-  
             <button type="submit" style={buttonStyle}>
               Ara
             </button>
