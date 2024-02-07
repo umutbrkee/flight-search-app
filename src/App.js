@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Uçuş Arama Uygulaması</h1>
+      <h1>Flight Search App</h1>
       <SearchForm onSearch={handleSearch} />
       {searchMade && <FlightList searchParams={searchParams} />}
     </div>

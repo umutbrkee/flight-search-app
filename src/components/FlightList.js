@@ -111,7 +111,7 @@ const FlightList = ({ searchParams }) => {
 
   // Uygun uçuş bulunamadıysa
   if (departure.length === 0 && (searchParams.oneWay || departureReturn.length === 0)) {
-    return <Typography variant="h6" color="textSecondary">Uygun uçuş bulunamadı.</Typography>;
+    return <Typography variant="h6" color="textSecondary">No flight available.</Typography>;
   }
 
   const listStyle = {
@@ -122,26 +122,26 @@ const FlightList = ({ searchParams }) => {
 
   const getType = (flight) => {
     if (flight.departureAirport === searchParams.arrivalAirport) {
-      return "Dönüş";
+      return "Homing flight";
     } else if (flight.departureAirport === searchParams.departureAirport) {
-      return "Gidiş";
+      return "Outbound flight";
     }
   };
 
   return (
     <div className="flightListContainer">
       <FormControl margin="normal">
-      <InputLabel>Sırala</InputLabel>
+      <InputLabel>Order By</InputLabel>
           <Select
           style={{marginBottom:'5px'}}
             value={sortCriteria}
             label="Sırala"
             onChange={handleSortChange}
           >
-            <MenuItem value="price">Fiyata Göre</MenuItem>
-            <MenuItem value="departureTime">Kalkış Zamanına Göre</MenuItem>
-            <MenuItem value="arrivalTime">Varış Zamanına Göre</MenuItem>
-            <MenuItem value="duration">Süreye Göre</MenuItem>
+            <MenuItem value="price">Price</MenuItem>
+            <MenuItem value="departureTime">Departure Time</MenuItem>
+            <MenuItem value="arrivalTime">Arrival Time</MenuItem>
+            <MenuItem value="duration">Flight Duration</MenuItem>
           </Select>      
         </FormControl>
       {departure.length > 0 || departureReturn.length > 0 ? (
@@ -172,7 +172,7 @@ const FlightList = ({ searchParams }) => {
           </Table>
         </TableContainer>
       ) : (
-        <Typography variant="h6" color="textSecondary">Uygun uçuş bulunamadı.</Typography>
+        <Typography variant="h6" color="textSecondary">No flight available.</Typography>
       )}
     </div>
   );

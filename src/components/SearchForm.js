@@ -14,15 +14,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 
 
 const SearchSchema = Yup.object().shape({
-  departureAirport: Yup.string().required("Kalkış havaalanı zorunlu bir alan."),
-  arrivalAirport: Yup.string().required("Varış havaalanı zorunlu bir alan."),
-  departureDate: Yup.date().required("Kalkış tarihi zorunlu bir alan."),
+  departureAirport: Yup.string().required("Departure airpoer must be chosen."),
+  arrivalAirport: Yup.string().required("Arrival airport must be chosen."),
+  departureDate: Yup.date().required("Departure date must be chosen."),
   returnDate: Yup.date().when(['oneWay', 'departureDate'], {
     is: (oneWay, departureDate) => !oneWay && departureDate,
     then: (SearchSchema) => SearchSchema.min(
       Yup.ref('departureDate'),
-      "Dönüş tarihi, kalkış tarihinden erken olamaz."
-    ).required("Dönüş Tarihi zorunlu bir alan."),
+      "Return date can not be earlier than departure date."
+    ).required("Return date must be chosen."),
     otherwise: (SearchSchema) => SearchSchema,
   }).nullable(),
   oneWay: Yup.boolean(),
@@ -135,7 +135,7 @@ marginTop:'10px'
                   setDepartureAirport(newValue ? newValue.value : '');
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Kalkış Havaalanı" margin="normal" />
+                  <TextField {...params} label="Departure Airport" margin="normal" />
                 )}
               />
               <ErrorMessage name="departureAirport" component="div" style={errorStyle} />
@@ -152,7 +152,7 @@ marginTop:'10px'
                 }}
                 isOptionEqualToValue={(option, value) => option.value === value.value}
                 renderInput={(params) => (
-                  <TextField {...params} label="Varış Havaalanı" margin="normal" />
+                  <TextField {...params} label="Arrival Airport" margin="normal" />
                 )}
               />
               <ErrorMessage name="arrivalAirport" component="div" style={errorStyle} />
@@ -161,7 +161,7 @@ marginTop:'10px'
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <div style={{ marginBottom: '20px' }}>
                 <DatePicker
-                  label="Kalkış Tarihi"
+                  label="Departure Date"
                   value={values.departureDate}
                   onChange={(newValue) => {
                     setFieldValue('departureDate', newValue);
@@ -179,7 +179,7 @@ marginTop:'10px'
               {!values.oneWay && (
                 <div style={{ marginBottom: '20px' }}>
                   <DatePicker
-                    label="Dönüş Tarihi"
+                    label="Return Date"
                     value={values.returnDate}
                     onChange={(newValue) => {
                       setFieldValue('returnDate', newValue);
@@ -200,10 +200,10 @@ marginTop:'10px'
 
             <div style={checkboxContainerStyle}>
               <Field type="checkbox" name="oneWay" style={checkboxStyle} />
-              <label htmlFor="oneWay" style={{ fontWeight: '600' }}>Tek yönlü uçuş </label>
+              <label htmlFor="oneWay" style={{ fontWeight: '600' }}>One way flight </label>
             </div>
             <button type="submit" className='button'>
-              Ara
+              Search
             </button>
           </Form>
         )}
