@@ -4,6 +4,9 @@
   background: rgba(255, 255, 255, 0.8);
 }
 
+span{
+  margin: 8px;
+}
 body, html {
   margin: 0;
   padding: 0;

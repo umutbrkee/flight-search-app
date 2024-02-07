@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as Yup from 'yup';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
@@ -14,19 +14,20 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 
 
 const SearchSchema = Yup.object().shape({
-  departureAirport: Yup.string().required("Departure airpoer must be chosen."),
+  departureAirport: Yup.string().required("Departure airport must be chosen."),
   arrivalAirport: Yup.string().required("Arrival airport must be chosen."),
   departureDate: Yup.date().required("Departure date must be chosen."),
   returnDate: Yup.date().when(['oneWay', 'departureDate'], {
-    is: (oneWay, departureDate) => !oneWay && departureDate,
-    then: (SearchSchema) => SearchSchema.min(
+    is: (oneWay) => !oneWay,
+    then: (returnDateSchema) => returnDateSchema.min(
       Yup.ref('departureDate'),
       "Return date can not be earlier than departure date."
     ).required("Return date must be chosen."),
-    otherwise: (SearchSchema) => SearchSchema,
+    otherwise: (returnDateSchema) => returnDateSchema,
   }).nullable(),
   oneWay: Yup.boolean(),
 });
+
 
 const SearchForm = ({ onSearch }) => {
   const [options, setOptions] = useState([]);
@@ -54,15 +55,7 @@ const SearchForm = ({ onSearch }) => {
 
   // Filtrelenmiş varış havaalanı seçenekleri
   const filteredOptions = options.filter(option => option.value !== departureAirport);
-  const datePickerStyle = {
-    display: 'block',
-    width: '100%',
-    padding: '8px',
-    marginBottom: '10px',
-    border: '1px solid #ced4da',
-    borderRadius: '4px',
-    fontSize: '16px',
-  };
+
 
   const errorStyle = {
     color: 'red',
@@ -91,10 +84,18 @@ const SearchForm = ({ onSearch }) => {
     height:'80px',
     justifyContent:'space-between',
     alignItems: 'center',
-marginTop:'10px'
+  marginTop:'10px'
   }
-  
 
+  const formikRef = useRef();
+
+  const handleDivClick = () => {
+    if (formikRef.current) {
+      // Toggle the 'oneWay' field value
+      const currentValue = formikRef.current.values.oneWay;
+      formikRef.current.setFieldValue('oneWay', !currentValue);
+    }
+  };
 
   return (
     
@@ -110,21 +111,23 @@ marginTop:'10px'
         textAlign: 'left',
       }}>
       <Formik
-        initialValues={{
+          initialValues={{
           departureAirport: null,
           arrivalAirport: null,
           departureDate: null,
           returnDate: null,
           oneWay: false,
-        }}
-        validationSchema={SearchSchema}
-        onSubmit={(values) => {
-          onSearch(values);
-        }}
+          }}
+          validationSchema={SearchSchema}
+          onSubmit={(values) => {
+            onSearch(values);
+          }}
+        innerRef={formikRef}
+
       >
 {({ setFieldValue, values, errors, touched }) => (
             <Form>
-            <div style={{marginTop:'10px',marginBottom:'10px'}}>
+            <div style={{position: 'relative' }}>
             <Autocomplete
                 id="departureAirport"
                 options={options}
@@ -135,14 +138,15 @@ marginTop:'10px'
                   setDepartureAirport(newValue ? newValue.value : '');
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Departure Airport" margin="normal" />
+                  <TextField style={{marginBottom:'0'}} {...params} label="Departure Airport" margin="normal" />
                 )}
               />
               <ErrorMessage name="departureAirport" component="div" style={errorStyle} />
             </div>
   
-            <div>
+            <div style={{ position: 'relative' }}>
             <Autocomplete
+                style={{marginTop:'-6px'}}
                 id="arrivalAirport"
                 options={filteredOptions}
                 getOptionLabel={(option) => option ? option.label : ''}
@@ -152,14 +156,14 @@ marginTop:'10px'
                 }}
                 isOptionEqualToValue={(option, value) => option.value === value.value}
                 renderInput={(params) => (
-                  <TextField {...params} label="Arrival Airport" margin="normal" />
+                  <TextField style={{marginBottom:'0'}} {...params} label="Arrival Airport" margin="normal" />
                 )}
               />
               <ErrorMessage name="arrivalAirport" component="div" style={errorStyle} />
             </div>
   <div style={dateClass}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <div style={{ marginBottom: '20px' }}>
+              <div style={{ marginBottom: '20px', position: 'relative', width:'49%' }}>
                 <DatePicker
                   label="Departure Date"
                   value={values.departureDate}
@@ -174,10 +178,15 @@ marginTop:'10px'
                     />
                   )}
                 />
+                
+                <div style={{ position: 'absolute', left: 0, right: 0 }}>
+                  <ErrorMessage name="departureDate" component="div" style={errorStyle} />
+
+                  </div>
               </div>
 
               {!values.oneWay && (
-                <div style={{ marginBottom: '20px' }}>
+                <div style={{ marginBottom: '20px', position: 'relative', width:'49%'}}>
                   <DatePicker
                     label="Return Date"
                     value={values.returnDate}
@@ -193,12 +202,17 @@ marginTop:'10px'
                       />
                     )}
                   />
+                  <div style={{ position: 'absolute', left: 0, right: 0 }}>
+                  <ErrorMessage name="returnDate" component="div" style={errorStyle} />
+
+                  </div>
                 </div>
               )}
             </LocalizationProvider>
               </div>
 
-            <div style={checkboxContainerStyle}>
+              <div style={checkboxContainerStyle}
+            onClick={handleDivClick}>
               <Field type="checkbox" name="oneWay" style={checkboxStyle} />
               <label htmlFor="oneWay" style={{ fontWeight: '600' }}>One way flight </label>
             </div>
@@ -211,4 +225,4 @@ marginTop:'10px'
     </div>
   );
 }
-export default SearchForm;
+export default SearchForm;

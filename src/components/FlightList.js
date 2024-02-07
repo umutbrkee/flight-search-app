@@ -12,11 +12,8 @@ import {  CircularProgress,
   TableHead,
   TableRow,
   Paper,
-  Typography,
-  Box} from '@mui/material';
-import SortIcon from '@mui/icons-material/Sort';
+  Typography} from '@mui/material';
 import "../App.css";
-import { Margin } from '@mui/icons-material';
 
 
 const FlightList = ({ searchParams }) => {
@@ -110,30 +107,26 @@ const FlightList = ({ searchParams }) => {
   }
 
   // Uygun uçuş bulunamadıysa
-  if (departure.length === 0 && (searchParams.oneWay || departureReturn.length === 0)) {
+  if (departure.length === 0 || (!searchParams.oneWay && departureReturn.length === 0)) {
     return <Typography variant="h6" color="textSecondary">No flight available.</Typography>;
   }
 
-  const listStyle = {
-    maxHeight: '400px', // Maksimum yükseklik
-    overflow: 'auto', // Taşma durumunda scrollbar göster
-    width: '100%', // Genişlik
-  };
+
 
   const getType = (flight) => {
     if (flight.departureAirport === searchParams.arrivalAirport) {
-      return "Homing flight";
+      return "Return";
     } else if (flight.departureAirport === searchParams.departureAirport) {
-      return "Outbound flight";
+      return "Depart";
     }
   };
 
   return (
     <div className="flightListContainer">
       <FormControl margin="normal">
-      <InputLabel>Order By</InputLabel>
+      <InputLabel >Order By</InputLabel>
           <Select
-          style={{marginBottom:'5px'}}
+          style={{marginBottom:'5px', padding:'3px'}}
             value={sortCriteria}
             label="Sırala"
             onChange={handleSortChange}
@@ -157,7 +150,7 @@ const FlightList = ({ searchParams }) => {
                 <TableCell>Flight Time</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody style={{margin:'5px'}}>
               {[...departure, ...departureReturn].map((flight) => (
                 <TableRow key={flight.id}>
                   <TableCell>{flight.departureAirport}</TableCell>
