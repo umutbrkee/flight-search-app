@@ -25,7 +25,6 @@ npx json-server --watch db.json --port 3001
 
 db.json, projenin kök dizinindeki JSON dosyasıdır ve uygulama tarafından kullanılan verileri içerir.
 
-ß
 Uygulamayı geliştirme modunda başlatın:
 
 npm start

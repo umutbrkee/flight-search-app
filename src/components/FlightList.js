@@ -1,6 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {  CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Box} from '@mui/material';
+import SortIcon from '@mui/icons-material/Sort';
 import "../App.css";
+import { Margin } from '@mui/icons-material';
 
 
 const FlightList = ({ searchParams }) => {
@@ -90,53 +106,76 @@ const FlightList = ({ searchParams }) => {
 
   // Loading Indicator
   if (isLoading) {
-    return <div className="loading">Yükleniyor...</div>; // can replace this with a spinner or any custom loading animation
+    return <div className="loading"><CircularProgress /></div>;
   }
 
-  if (departure.length === 0 && searchParams.oneWay) {
-    return <div>Uygun gidiş uçuşu bulunamadı.</div>;
-  } else if (departure.length === 0 || (!searchParams.oneWay && departureReturn.length === 0)) {
-    return <div>Uygun uçuş bulunamadı.</div>;
+  // Uygun uçuş bulunamadıysa
+  if (departure.length === 0 && (searchParams.oneWay || departureReturn.length === 0)) {
+    return <Typography variant="h6" color="textSecondary">Uygun uçuş bulunamadı.</Typography>;
   }
 
-  
-return (
-  <div className="flightListContainer">
-    <select value={sortCriteria} onChange={handleSortChange} className="sortSelect">
-      <option value="price">Price</option>
-      <option value="departureTime">Departure Time</option>
-      <option value="arrivalTime">Arrival Time</option>
-      <option value="duration">Duration</option>
-    </select>
-    <h2 className="flightHeader">Gidiş Uçuşları</h2>
-    <ul className="flightList">
-      {departure.map((flight) => (
-        <li key={flight.id} className="flightItem">
-          <div className="flightDetails">{flight.departureAirport} - {flight.arrivalAirport}</div>
-          <div className="flightDetails">Kalkış: {new Date(flight.departureTime).toLocaleString()}</div>
-          <div className="flightDetails">Varış: {new Date(flight.arrivalTime).toLocaleString()}</div>
-          <div className="flightDetails">Uçuş Süresi: {flight.duration}</div>
-          <div className="flightPrice">Fiyat: ${flight.price}</div>
-        </li>
-      ))}
-    </ul>
-    {!searchParams.oneWay && (
-      <div>
-        <h2 className="flightHeader">Dönüş Uçuşları</h2>
-        <ul className="flightList">
-          {departureReturn.map((flight) => (
-            <li key={flight.id} className="flightItem">
-              <div className="flightDetails">{flight.departureAirport} - {flight.arrivalAirport}</div>
-              <div className="flightDetails">Kalkış: {new Date(flight.departureTime).toLocaleString()}</div>
-              <div className="flightDetails">Varış: {new Date(flight.arrivalTime).toLocaleString()}</div>
-              <div className="flightDetails">Uçuş Süresi: {flight.duration}</div>
-              <div className="flightPrice">Fiyat: ${flight.price}</div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )}
-  </div>
-);
-          }
+  const listStyle = {
+    maxHeight: '400px', // Maksimum yükseklik
+    overflow: 'auto', // Taşma durumunda scrollbar göster
+    width: '100%', // Genişlik
+  };
+
+  const getType = (flight) => {
+    if (flight.departureAirport === searchParams.arrivalAirport) {
+      return "Dönüş";
+    } else if (flight.departureAirport === searchParams.departureAirport) {
+      return "Gidiş";
+    }
+  };
+
+  return (
+    <div className="flightListContainer">
+      <FormControl margin="normal">
+      <InputLabel>Sırala</InputLabel>
+          <Select
+          style={{marginBottom:'5px'}}
+            value={sortCriteria}
+            label="Sırala"
+            onChange={handleSortChange}
+          >
+            <MenuItem value="price">Fiyata Göre</MenuItem>
+            <MenuItem value="departureTime">Kalkış Zamanına Göre</MenuItem>
+            <MenuItem value="arrivalTime">Varış Zamanına Göre</MenuItem>
+            <MenuItem value="duration">Süreye Göre</MenuItem>
+          </Select>      
+        </FormControl>
+      {departure.length > 0 || departureReturn.length > 0 ? (
+        <TableContainer component={Paper} style={{ maxHeight: 400 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Departure</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Arrival</TableCell>
+                <TableCell>Departure Time</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Flight Time</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {[...departure, ...departureReturn].map((flight) => (
+                <TableRow key={flight.id}>
+                  <TableCell>{flight.departureAirport}</TableCell>
+                  <TableCell>{getType(flight)}</TableCell>
+                  <TableCell>{flight.arrivalAirport}</TableCell>
+                  <TableCell>{new Date(flight.departureTime).toLocaleString()}</TableCell>
+                  <TableCell>${flight.price}</TableCell>
+                  <TableCell>{flight.duration}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography variant="h6" color="textSecondary">Uygun uçuş bulunamadı.</Typography>
+      )}
+    </div>
+  );
+};
+
 export default FlightList;

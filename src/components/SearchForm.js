@@ -2,12 +2,15 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import 'react-datepicker/dist/react-datepicker.css';
-import DatePicker from 'react-datepicker';
-import Select from 'react-select';
 import axios from 'axios';
 import "../App.css";
-import { TbArrowsLeftRight } from "react-icons/tb";
 
+import { TextField } from '@mui/material';
+import Autocomplete from "@mui/material/Autocomplete"
+
+import { DatePicker } from "@mui/x-date-pickers/DatePicker"
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 
 
 const SearchSchema = Yup.object().shape({
@@ -27,7 +30,7 @@ const SearchSchema = Yup.object().shape({
 
 const SearchForm = ({ onSearch }) => {
   const [options, setOptions] = useState([]);
-  const [selectedDeparture] = useState('');
+  const [departureAirport, setDepartureAirport] = useState('');
 
   useEffect(() => {
     axios
@@ -50,7 +53,7 @@ const SearchForm = ({ onSearch }) => {
   }, []);
 
   // Filtrelenmiş varış havaalanı seçenekleri
-  const filteredOptions = options.filter(option => option.value !== selectedDeparture);
+  const filteredOptions = options.filter(option => option.value !== departureAirport);
   const datePickerStyle = {
     display: 'block',
     width: '100%',
@@ -80,20 +83,7 @@ const SearchForm = ({ onSearch }) => {
     marginRight: '10px',
   };
 
-  const buttonStyle = {
-    display: 'block',
-    width: '100%',
-    padding: '10px 0',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '18px',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    marginTop: '20px',
-  };
+
   const dateClass = {
     display: 'flex',
     flexDirection: 'row',
@@ -101,12 +91,13 @@ const SearchForm = ({ onSearch }) => {
     height:'80px',
     justifyContent:'space-between',
     alignItems: 'center',
-
+marginTop:'10px'
   }
   
 
 
   return (
+    
     <div style={{ 
         display: 'flex', 
         flexDirection: 'column', 
@@ -120,8 +111,8 @@ const SearchForm = ({ onSearch }) => {
       }}>
       <Formik
         initialValues={{
-          departureAirport: '',
-          arrivalAirport: '',
+          departureAirport: null,
+          arrivalAirport: null,
           departureDate: null,
           returnDate: null,
           oneWay: false,
@@ -131,82 +122,87 @@ const SearchForm = ({ onSearch }) => {
           onSearch(values);
         }}
       >
-        {({ setFieldValue, values }) => (
-          <Form>
-            <div>
-              <label htmlFor="departureAirport" style={{ marginBottom: '5px', fontWeight: '600' }}>Kalkış Havaalanı</label>
-              <Select
-                name="departureAirport"
+{({ setFieldValue, values, errors, touched }) => (
+            <Form>
+            <div style={{marginTop:'10px',marginBottom:'10px'}}>
+            <Autocomplete
+                id="departureAirport"
                 options={options}
-                classNamePrefix="select"
-                value={options.find(option => option.value === values.departureAirport)}
-                onChange={(selectedOption) => {
-                  setFieldValue('departureAirport', selectedOption.value);
+                getOptionLabel={(option) => option ? option.label : ''}
+                value={options.find(option => option.value === values.departureAirport) || ''}
+                onChange={(event, newValue) => {
+                  setFieldValue('departureAirport', newValue ? newValue.value : '');
+                  setDepartureAirport(newValue ? newValue.value : '');
                 }}
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    minHeight: '40px',
-                    marginBottom: '20px',
-                  }),
-                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Kalkış Havaalanı" margin="normal" />
+                )}
               />
-              <ErrorMessage name="departureAirport" component="div" style={{ color: 'red', fontSize: '0.75rem', marginTop: '0.25rem' }} />
+              <ErrorMessage name="departureAirport" component="div" style={errorStyle} />
             </div>
   
             <div>
-              <label htmlFor="arrivalAirport" style={{ marginBottom: '5px', fontWeight: '600' }}>Varış Havaalanı</label>
-              <Select
-                name="arrivalAirport"
+            <Autocomplete
+                id="arrivalAirport"
                 options={filteredOptions}
-                classNamePrefix="select"
-                value={filteredOptions.find(option => option.value === values.arrivalAirport)}
-                onChange={(selectedOption) => setFieldValue('arrivalAirport', selectedOption.value)}
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    minHeight: '40px',
-                    marginBottom: '20px',
-                  }),
+                getOptionLabel={(option) => option ? option.label : ''}
+                value={filteredOptions.find(option => option.value === values.arrivalAirport) || ''}
+                onChange={(event, newValue) => {
+                  setFieldValue('arrivalAirport', newValue ? newValue.value : '');
                 }}
+                isOptionEqualToValue={(option, value) => option.value === value.value}
+                renderInput={(params) => (
+                  <TextField {...params} label="Varış Havaalanı" margin="normal" />
+                )}
               />
-              <ErrorMessage name="arrivalAirport" component="div" style={{ color: 'red', fontSize: '0.75rem', marginTop: '0.25rem' }} />
+              <ErrorMessage name="arrivalAirport" component="div" style={errorStyle} />
             </div>
   <div style={dateClass}>
-            <div style={{width:'45%'}}>
-              <label htmlFor="departureDate" style={{ marginBottom: '5px', fontWeight: '600' }}>Kalkış Tarihi </label>
-              <DatePicker
-                selected={values.departureDate}
-                dateFormat="yyyy-MM-dd"
-                onChange={(date) => setFieldValue('departureDate', date)}
-                style={datePickerStyle}
-              />
-              <ErrorMessage name="departureDate" component="div" style={errorStyle} />
-            </div>
-            {!values.oneWay && (
-            <span style={{width:'10%', marginTop:'20px'}}>
-        <TbArrowsLeftRight />
-      </span>)}
-            {!values.oneWay && (
-            <div style={{width:'45%'}}>
-              <label htmlFor="returnDate" style={{ marginBottom: '5px', fontWeight: '600' }}>Dönüş Tarihi </label>
-              <DatePicker
-                selected={values.returnDate}
-                dateFormat="yyyy-MM-dd"
-                onChange={(date) => setFieldValue('returnDate', date)}
-                disabled={values.oneWay}
-                style={datePickerStyle}
-              />
-              <ErrorMessage name="returnDate" component="div" style={errorStyle} />
-            </div>
-            )}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <div style={{ marginBottom: '20px' }}>
+                <DatePicker
+                  label="Kalkış Tarihi"
+                  value={values.departureDate}
+                  onChange={(newValue) => {
+                    setFieldValue('departureDate', newValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      error={Boolean(touched.departureDate && errors.departureDate)}
+                      helperText={touched.departureDate && errors.departureDate}
+                    />
+                  )}
+                />
+              </div>
+
+              {!values.oneWay && (
+                <div style={{ marginBottom: '20px' }}>
+                  <DatePicker
+                    label="Dönüş Tarihi"
+                    value={values.returnDate}
+                    onChange={(newValue) => {
+                      setFieldValue('returnDate', newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        error={Boolean(touched.returnDate && errors.returnDate)}
+                        helperText={touched.returnDate && errors.returnDate}
+                        disabled={values.oneWay}
+                      />
+                    )}
+                  />
+                </div>
+              )}
+            </LocalizationProvider>
               </div>
 
             <div style={checkboxContainerStyle}>
               <Field type="checkbox" name="oneWay" style={checkboxStyle} />
               <label htmlFor="oneWay" style={{ fontWeight: '600' }}>Tek yönlü uçuş </label>
             </div>
-            <button type="submit" style={buttonStyle}>
+            <button type="submit" className='button'>
               Ara
             </button>
           </Form>
