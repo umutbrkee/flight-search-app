@@ -10,7 +10,7 @@
 
 Projeyi lokal ortamınızda çalıştırmak için aşağıdaki adımları takip edebilirsiniz:
 
-Node.js'in son güncel versiyonunu kullandığınızdan emin olun:
+NVM ile Node.js'in son güncel versiyonunu kullandığınızdan emin olun:
 
 ```bash
 nvm install 20.11.0
